@@ -1,7 +1,7 @@
 package ec.edu.espe.arquitectura.kafka;
 
 import com.github.javafaker.Faker;
-import ec.edu.espe.arquitectura.kafka.model.Persona;
+import ec.edu.espe.arquitectura.kafka.model.PagoPrestamo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +12,9 @@ import org.springframework.kafka.core.KafkaSendCallback;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @SpringBootApplication
 @Slf4j
@@ -25,16 +28,16 @@ public class KafkaApplication {
     CommandLineRunner commandLineRunner(KafkaTemplate<String, Object> kafkaTemplate) {
         return args -> {
             Faker faker = new Faker();
-            Persona persona = new Persona();
+            PagoPrestamo pagoPrestamo = new PagoPrestamo();
             for (int i = 0; i < 10000; i++) {
-                persona.setNombre(faker.name().firstName());
-                persona.setApellido(faker.name().lastName());
-                persona.setTelefono(faker.phoneNumber().phoneNumber());
-                persona.setCorreo(faker.internet().emailAddress());
-                persona.setDireccion(faker.address().fullAddress());
-                persona.setFechaNacimiento(faker.date().birthday(18, 80));
-                log.info("Persona: {}", persona);
-                ListenableFuture<SendResult<String, Object>> send = kafkaTemplate.send("personas", persona);
+                pagoPrestamo.
+                pagoPrestamo.setPago();
+                pagoPrestamo.setFecha(LocalDate.now());
+                pagoPrestamo.setHora(LocalTime.now());
+                pagoPrestamo.setNumeroCuota(faker.number().randomDigit());
+
+                log.info("Persona: {}", pagoPrestamo);
+                ListenableFuture<SendResult<String, Object>> send = kafkaTemplate.send("personas", pagoPrestamo);
                 send.addCallback(new KafkaSendCallback<String, Object>() {
                     @Override
                     public void onSuccess(SendResult<String, Object> result) {

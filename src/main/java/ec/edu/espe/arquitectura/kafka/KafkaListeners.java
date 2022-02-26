@@ -5,8 +5,8 @@
  */
 package ec.edu.espe.arquitectura.kafka;
 
-import ec.edu.espe.arquitectura.kafka.controller.PersonaController;
-import ec.edu.espe.arquitectura.kafka.model.Persona;
+import ec.edu.espe.arquitectura.kafka.controller.PagoPrestamoController;
+import ec.edu.espe.arquitectura.kafka.model.PagoPrestamo;
 //import ec.edu.espe.arquitectura.kafka.service.MensajeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,10 +21,10 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class KafkaListeners {
 
-    private final PersonaController mensajeController;
+    private final PagoPrestamoController mensajeController;
     private RestTemplate restTemplate = new RestTemplate();
 
-    public KafkaListeners(PersonaController mensajeController) {
+    public KafkaListeners(PagoPrestamoController mensajeController) {
         this.mensajeController = mensajeController;
     }
 
@@ -32,9 +32,9 @@ public class KafkaListeners {
             topics = "personas",
             groupId = "groupId"
     )
-    public void Listener(Persona p) {
+    public void Listener(PagoPrestamo p) {
         log.info("Data recibida sin procesar nada: {}", p);
-        this.restTemplate.postForObject("http://localhost:8080/api/v1/persona", p, Persona.class);
+        this.restTemplate.postForObject("http://localhost:8080/api/v1/persona", p, PagoPrestamo.class);
         //this.restTemplate.exchange("http://localhost:8090/api/v1/", HttpMethod.POST, data, String.class);
         //log.info("Esta data procesada: {}", jsonString);
 //        System.out.println("Data recibida" + data);

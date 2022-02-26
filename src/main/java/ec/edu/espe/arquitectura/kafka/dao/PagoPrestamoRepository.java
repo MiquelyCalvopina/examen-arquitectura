@@ -5,13 +5,9 @@
  */
 package ec.edu.espe.arquitectura.kafka.dao;
 
-import ec.edu.espe.arquitectura.kafka.model.Persona;
+import ec.edu.espe.arquitectura.kafka.model.PagoPrestamo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- *
- * @author Windows Boo
- */
-public interface PersonaRepository extends JpaRepository<Persona, Integer>{
+public interface PagoPrestamoRepository extends JpaRepository<PagoPrestamo, Integer>{
     
 }

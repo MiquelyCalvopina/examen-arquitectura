@@ -5,8 +5,8 @@
  */
 package ec.edu.espe.arquitectura.kafka.controller;
 
-import ec.edu.espe.arquitectura.kafka.model.Persona;
-import ec.edu.espe.arquitectura.kafka.service.PersonaService;
+import ec.edu.espe.arquitectura.kafka.model.PagoPrestamo;
+import ec.edu.espe.arquitectura.kafka.service.PagoPrestamoService;
 //import ec.edu.espe.arquitectura.kafka.service.MensajeService;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,29 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Windows Boo
- */
 @RestController
 @RequestMapping("api/v1/")
-public class PersonaController {
+public class PagoPrestamoController {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final PersonaService personaService;
+    private final PagoPrestamoService pagoPrestamoService;
 
-    public PersonaController(KafkaTemplate<String, Object> kafkaTemplate, PersonaService personaService) {
+    public PagoPrestamoController(KafkaTemplate<String, Object> kafkaTemplate, PagoPrestamoService pagoPrestamoService) {
         this.kafkaTemplate = kafkaTemplate;
-        this.personaService = personaService;
+        this.pagoPrestamoService = pagoPrestamoService;
     }
 
     @PostMapping
-    public void publish(@RequestBody Persona p) {
-        kafkaTemplate.send("personas", p);
+    public void publish(@RequestBody PagoPrestamo pago) {
+        kafkaTemplate.send("pagos", pago);
     }
 
-    @PostMapping("persona")
-    public void enviarMensaje(@RequestBody Persona p) {
-        this.personaService.guardarPersona(p);
+    @PostMapping("pago")
+    public void enviarMensaje(@RequestBody PagoPrestamo p) {
+        this.pagoPrestamoService.guardarPagoPrestamo(p);
     }
 }
